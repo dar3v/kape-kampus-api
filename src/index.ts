@@ -1,10 +1,22 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
+import { logger } from 'hono/logger'
+import { cors } from 'hono/cors'
 import { z } from 'zod'
 import { zValidator } from '@hono/zod-validator'
 import { menu, orders, type Order } from './data'
 
 const app = new Hono()
+
+app.use(logger())
+app.use(cors())
+
+// a custom one: time every request
+app.use(async (c, next) => {
+  const start = Date.now()
+  await next()
+  c.header('X-Response-Time', `${Date.now() - start}ms`)
+})
 
 app.get('/', (c) => c.text('Kape Kampus API is open!'))
 
