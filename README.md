@@ -50,7 +50,6 @@ Replace `step-3-orders` with any tag from the table above. The `-f` flag forces 
 
 Two things to know about catching up:
 
-- Files that you created in a later step are not removed by `git checkout`. For example, if you practiced step 6, a stray `src/routes/menu.ts` can still be there when you catch back down to step 2. Delete files you no longer need.
 - Files that you created in a later step are not removed by `git checkout`. Got a leftover `src/routes/menu.ts` from step 6 while you are back at step 2? `node_modules/.tmp/` style leftovers are harmless, but a stray file can shadow the code you are about to write.
 - `git clean -fd` removes untracked files (but not ignored ones such as `node_modules`), so only use it when you know you want them gone.
 
