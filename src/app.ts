@@ -20,4 +20,11 @@ app.get('/', (c) => c.text('Kape Kampus API is open!'))
 app.route('/menu', menuRoutes)
 app.route('/orders', orderRoutes)
 
+app.notFound((c) => c.json({ error: 'Route not found' }, 404))
+
+app.onError((err, c) => {
+  console.error(err)
+  return c.json({ error: 'Something went wrong on our end' }, 500)
+})
+
 export default app
