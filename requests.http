@@ -1,0 +1,49 @@
+@host = http://localhost:3000
+@token = kape-secret
+
+### Step 1: root
+GET {{host}}/
+
+### Step 2: whole menu
+GET {{host}}/menu
+
+### Step 2: only available items
+GET {{host}}/menu?available=true
+
+### Step 2: one item
+GET {{host}}/menu/2
+
+### Step 2: missing item (expect 404)
+GET {{host}}/menu/99
+
+### Step 3 and 4: place an order
+POST {{host}}/orders
+Content-Type: application/json
+
+{ "customer": "Ana", "itemIds": [1, 2] }
+
+### Step 3 and 4: a bad order
+POST {{host}}/orders
+Content-Type: application/json
+
+{ "nope": true }
+
+### Step 4: sold-out item (expect 400)
+POST {{host}}/orders
+Content-Type: application/json
+
+{ "customer": "Ana", "itemIds": [4] }
+
+### Step 7: no token (expect 401)
+GET {{host}}/orders
+
+### Step 7: owner sees all orders
+GET {{host}}/orders
+Authorization: Bearer {{token}}
+
+### Step 7: owner marks order 1 as ready
+PATCH {{host}}/orders/1/status
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "status": "ready" }
